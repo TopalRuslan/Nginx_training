@@ -18,7 +18,7 @@ RUN systemctl mask \
       systemd-udevd.service systemd-udev-trigger.service \
       getty.target console-getty.service \
       systemd-firstboot.service \
- && systemctl enable nginx
+ && systemctl disable nginx
 
 EXPOSE 80
 

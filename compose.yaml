@@ -10,3 +10,6 @@ services:
       - /run/lock
     ports:
       - "8080:80"
+    # репозиторий с заданиями и тестами — только для чтения
+    volumes:
+      - ./:/training:ro
