@@ -1,0 +1,12 @@
+services:
+  nginx-train:
+    build: .
+    image: nginx-train
+    container_name: nginx-train
+    # systemd нужен доступ к cgroups — только для учебного стенда
+    privileged: true
+    tmpfs:
+      - /run
+      - /run/lock
+    ports:
+      - "8080:80"
