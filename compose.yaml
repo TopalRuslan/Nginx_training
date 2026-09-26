@@ -9,4 +9,32 @@ services:
       - /run
       - /run/lock
     ports:
-      - "8080:80"
+      - "8088:80"
+    # репозиторий с заданиями и тестами — только для чтения
+    volumes:
+      - ./:/training:ro
+    depends_on:
+      - todo-web
+      - todo-api
+
+  # фронтенд Todo-приложения для Task 2
+  todo-web:
+    image: node:22-alpine
+    container_name: todo-web
+    working_dir: /app
+    command: node server.js
+    volumes:
+      - ./task-2-nginx-config/frontend:/app:ro
+    ports:
+      - "3300:3000"
+
+  # бекенд Todo-приложения для Task 2
+  todo-api:
+    image: python:3.12-alpine
+    container_name: todo-api
+    working_dir: /app
+    command: python -u server.py
+    volumes:
+      - ./task-2-nginx-config/backend:/app:ro
+    ports:
+      - "5500:5000"

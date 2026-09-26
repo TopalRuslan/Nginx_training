@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Todo list</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Unbounded:wght@500;700&display=swap">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="shell">
+    <header class="top">
+      <span class="brand">todo<span class="brand-dot">.</span>localhost</span>
+      <nav>
+        <a href="/">Задачи</a>
+        <a href="/about">Как это работает</a>
+      </nav>
+    </header>
+
+    <section class="route" aria-label="Через что прошли запросы этой страницы">
+      <span class="node node-browser on" id="node-browser">браузер</span>
+      <span class="wire" aria-hidden="true"></span>
+      <span class="node node-nginx" id="node-nginx">nginx</span>
+      <span class="wire" aria-hidden="true"></span>
+      <span class="branches">
+        <span class="node node-web" id="node-web">todo-web :3300</span>
+        <span class="node node-api" id="node-api">todo-api :5500</span>
+      </span>
+    </section>
+
+    <main id="page-todos" hidden>
+      <h1>Задачи</h1>
+      <form id="add-form" class="add">
+        <label class="visually-hidden" for="title">Новая задача</label>
+        <input id="title" placeholder="Что нужно сделать?" autocomplete="off" required>
+        <button type="submit">Добавить</button>
+      </form>
+      <p id="status" class="status" role="status"></p>
+      <ul id="list" class="list"></ul>
+      <p id="summary" class="summary"></p>
+    </main>
+
+    <main id="page-about" hidden>
+      <h1>Как это работает</h1>
+      <p>Приложение состоит из двух программ в разных контейнерах. Nginx принимает все
+        запросы на <code>todo.localhost</code> и решает, кому их передать:</p>
+      <dl class="rules">
+        <dt><code>/api/…</code></dt>
+        <dd>бекенд <code>todo-api</code> — хранит задачи. Снаружи порт 5500, внутри контейнера 5000</dd>
+        <dt>всё остальное</dt>
+        <dd>фронтенд <code>todo-web</code> — отдаёт эту страницу. Снаружи порт 3300, внутри контейнера 3000</dd>
+      </dl>
+      <p>Схема сверху показывает, через что на самом деле прошли запросы. Открой
+        <a href="http://localhost:3300">localhost:3300</a> напрямую — страница загрузится,
+        но nginx и API погаснут: без nginx запрос на <code>/api</code> попадает во фронтенд,
+        а тот API не обслуживает.</p>
+    </main>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
